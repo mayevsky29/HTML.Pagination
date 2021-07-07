@@ -54,42 +54,43 @@
                 <h1 class="text-center">Контакти</h1>
 
                 <form>
-                    <label for="txtLastName">Прізвище</label>
-                    <input type="text" class="form-control is-valid" id="txtLastName" placeholder="Ваше прізвище">
-                    <div class="valid-feedback">
-                        Looks good!
+                    <div class="form-group">
+                        <label for="txtLastName">Прізвище</label>
+                        <input type="text" class="form-control" id="txtLastName" placeholder="Ваше прізвище">
+                        <div class="valid-feedback">
+                            Вкажіть прізвище!
+                        </div>
                     </div>
-
 
                     <div class="form-group">
                         <label for="txtName">Ім'я</label>
-                        <input type="text" class="form-control is-invalid" id="txtName" placeholder="Ваше ім'я">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="phone">Телефон</label>
-                        <input type="number" class="form-control" id="phone" placeholder="Ваш телефон" />
-                        
-                        <div class="invalid-feedback">
-                            Поле 'Номер телефону' не може бути пустим!
-                        </div>
+                        <input type="text" class="form-control" id="txtName" placeholder="Ваше ім'я">
                         <div class="valid-feedback">
-                            Дані введено вірно!
+                             Вкажіть ім’я!
                         </div>
                     </div>
 
-                   
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Ваш телефон">
+                        <div class="invalid-feedback">
+                            Вкажіть правильно телефон +xx(xxx) xxx xx xx.
+                        </div>
+                    </div>
+
+
 
                     <div class="form-group">
-                        <label class="control-label" for="txtEmail">Електрона пошта</label>
-                        <input type="email" class="form-control is-invalid" id="txtEmail" placeholder="Ваша пошта">
+                        <label for="txtEmail">Пошта</label>
+                        <input type="text" class="form-control" id="txtEmail" placeholder="Ваша пошта">
+                        <div class="invalid-feedback">
+                            Вкажіть правильно пошту.
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        You must agree before submitting.
-                    </div>
+
                     <div style="float:right;">
-                        <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> На головну</a>
-                        <button class="btn btn-success" id="btnOk">Подати заявку</button>
+                            <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> На головну</a>
+                            <button class="btn btn-success" id="btnOk">Подати заявку</button>
 
                     </div>
                 </form>
@@ -111,7 +112,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>ПІБ: <b><span id="modalFullName"></span></b></p>
+                    <p>Прізвище: <b><span id="modalLastName"></span></b></p>
+                    <p>Ім’я: <b><span id="modalName"></span></b></p>
                     <p>Телефон: <b><span id="phoneNumber"></span></b></p>
                     <p>Пошта: <b><span id="modalEmail"></span></b></p>
 
@@ -120,9 +122,9 @@
                         <label class="custom-control-label" for="customCheck1">&nbsp;Даю повну згоду</label>
                     </div>
                     <!--<div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Я даю повну згоду</label>
-                    </div>-->
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Я даю повну згоду</label>
+    </div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Подати заявку</button>
@@ -132,14 +134,13 @@
         </div>
     </div>
 
-
-  
-
-   
-
+    
+    
+    <script src="js/popper.min.js"></script>
+    <script src="/js/bootbox.all.min.js"></script>
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/contacts.js"></script>
-
+    <script src="/js/imask.js"></script>
 </body>
 </html>
