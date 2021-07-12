@@ -69,6 +69,7 @@ window.onload = function () {
     btnAddUserSave.onclick = function (e) {
 
         if (isValidation()) {
+           
             var lastName = txtLastName.value;
             var name = txtName.value;
             var phone = txtPhone.value;
@@ -78,6 +79,7 @@ window.onload = function () {
             var tr = document.createElement("tr");
             tr.innerHTML = `
                             <th scope="row">${number++}</th>
+                            <td><img src="${selectImageBase64.value}" width="30" height="30"/></td>
                             <td>${lastName}</td>
                             <td>${name}</td>
                             <td>${phone}</td>
