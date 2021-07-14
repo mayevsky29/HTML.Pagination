@@ -86,7 +86,7 @@ window.onload = function () {
                             <td>
                                 <i class="fa fa-pencil fa-2x text-info cursor-pointer"
                                     aria-hidden="true"
-                                    ></i>
+                                    onclick="EditUser(this)"></i>
                                 <i class="fa fa-times fa-2x text-danger cursor-pointer"
                                     aria-hidden="true"
                                     onclick="DeleteRow(this)"></i>
@@ -185,6 +185,56 @@ window.onload = function () {
     }
 }
 
+//DragAndDrop
+
+var draganddrop = document.getElementById('draganddrop');
+draganddrop.addEventListener('dragenter', DragIn, false);
+draganddrop.addEventListener('dragover', DragIn, false);
+
+draganddrop.addEventListener('dragleave', DragOut, false);
+draganddrop.addEventListener('drop', DragOut, false);
+
+
+draganddrop.addEventListener('dragenter', PreventDefaults, false);
+draganddrop.addEventListener('dragover', PreventDefaults, false);
+
+draganddrop.addEventListener('dragleave', PreventDefaults, false);
+draganddrop.addEventListener('drop', PreventDefaults, false);
+
+draganddrop.addEventListener('drop', SaveImage, false);
+
+function DragIn(e) {
+    draganddrop.classList.add('dragIn');
+}
+
+function DragOut(e) {
+    draganddrop.classList.remove('dragIn');
+}
+
+function PreventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+function SaveImage(e) {
+    var files;
+    if (e.files) {
+        files = e.files;
+    } else if (e.dataTransfer) {
+        files = e.dataTransfer.files;
+    }
+
+    if (files) {
+        if (files[0]) {
+            var file = files[0];
+            imgPhoto.files = files;
+            isValidImage(imgPhoto);
+        }
+    }
+}
+
+
+
 function DeleteRow(e) {
     var tbodyUsers = document.getElementById('tbodyUsers');
 
@@ -194,6 +244,136 @@ function DeleteRow(e) {
         }
     });
 }
+
+function Fail(inputTag) {
+    inputTag.classList.add("is-invalid");
+    inputTag.classList.remove("is-valid");
+}
+
+function Success(inputTag) {
+    inputTag.classList.add("is-valid");
+    inputTag.classList.remove("is-invalid");
+}
+
+
+function updateCount(tbodyUsers) {
+    var rows = tbodyUsers.rows;
+    for (var i = 0; i < rows.length; i++) {
+        rows.item(i).cells[0].innerHTML = i + 1;
+    }
+    number--;
+}
+
+function EditUser(e) {
+    var txtLastName = document.getElementById("txtLastName");
+    var txtName = document.getElementById("txtName");
+    var txtPhone = document.getElementById("txtPhone");
+    var txtEmail = document.getElementById("txtEmail");
+    var selectImageBase64 = document.getElementById("selectImageBase64");
+
+    var btnSaveChanges = document.getElementById('btnSaveChanges');
+    var modalHeader = document.getElementById('modalHeader');
+
+    var tr = e.parentElement.parentElement;
+
+    btnSaveChanges.tag = tr;
+    btnSaveChanges.onclick = UpdateTableRow;
+    modalHeader.innerHTML = "Редагувати користувача";
+
+    var closeModal = document.getElementById('closeModal');
+    closeModal.onclick = UpdateTableRowClose;
+
+    txtName.value = tr.cells[2].innerHTML;
+    txtName.classList.add('is-valid');
+
+    txtLastName.value = tr.cells[3].innerHTML;
+    txtLastName.classList.add('is-valid');
+
+    txtPhone.value = tr.cells[4].innerHTML;
+    txtPhone.classList.add('is-valid');
+
+    txtEmail.value = tr.cells[5].innerHTML;
+    txtEmail.classList.add('is-valid');
+
+    imgModal.src = tr.cells[1].firstChild.src;
+    selectImageBase64.classList.add("is-valid");
+
+    $('#myModal').modal("show");
+
+    //ReloadModal(e);
+}
+
+function ReloadModal(e) {
+
+}
+
+function RemoveValidation() {
+    myForm.reset();
+    imgModal.src = "/images/no-image.png";
+    inputImgHidden.value = "";
+
+    txtName.classList.remove("is-valid");
+    txtName.classList.remove("is-invalid");
+
+    txtLastName.classList.remove("is-valid");
+    txtLastName.classList.remove("is-invalid");
+
+    txtPhone.classList.remove("is-valid");
+    txtPhone.classList.remove("is-invalid");
+
+    txtEmail.classList.remove("is-valid");
+    txtEmail.classList.remove("is-invalid");
+
+    selectImageBase64.classList.remove("is-valid");
+    selectImageBase64.classList.remove("is-invalid");
+
+}
+
+function UpdateTableRow(e) {
+    var txtName = document.getElementById('txtName');
+    var txtLastName = document.getElementById('txtLastName');
+    var txtPhone = document.getElementById('txtPhone');
+    var txtEmail = document.getElementById('txtEmail');
+    var imgModal = document.getElementById('imgModal');
+
+
+    if (isValidationWithoutImage() && isValidImageWithoutRequired(document.getElementById('selectImageBase64'))) {
+        var modalHeader = document.getElementById('modalHeader');
+        modalHeader.innerHTML = "Додати нового користувача";
+
+        var closeModal = document.getElementById('closeModal');
+        closeModal.onclick = RemoveValidation;
+        var tr = e.target.tag;
+        tr.cells[1].firstChild.src = imgModal.src;
+        tr.cells[2].innerHTML = txtName.value;
+        tr.cells[3].innerHTML = txtLastName.value;
+        tr.cells[4].innerHTML = txtPhone.value;
+        tr.cells[5].innerHTML = txtEmail.value;
+
+        var btnSaveChanges = document.getElementById('btnSaveChanges');
+        btnSaveChanges.onclick = btnSaveChangesClick;
+        RemoveValidation();
+        $('#myModal').modal("hide");
+    }
+}
+
+function UpdateTableRowClose() {
+    var modalHeader = document.getElementById('modalHeader');
+    modalHeader.innerHTML = "Додати нового користувача";
+
+    var closeModal = document.getElementById('closeModal');
+    closeModal.onclick = RemoveValidation;
+
+
+    var btnSaveChanges = document.getElementById('btnSaveChanges');
+    btnSaveChanges.onclick = btnSaveChangesClick;
+    RemoveValidation();
+    $('#myModal').modal("hide");
+}
+
+
+
+
 
 function ChangeRow(tr) {
     var mainForm = document.getElementById('mainForm');
