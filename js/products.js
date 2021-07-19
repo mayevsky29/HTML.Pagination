@@ -2,20 +2,22 @@
     //console.log("begin on load");
     //# - getElementById, . - пошук по класу, [] - по атребуту
     var $myModal = $("#myModal"); //модалка
-    var $txtName = $("#txtName");
-    var $txtDescription = $("#txtDescription");
-    var $txtPrice = $("#txtPrice");
-    var $productsBlock = $("#productsBlock");
-    var $imgPhotoBlock = $("#imgPhotoBlock");
+    var $txtName = $("#txtName"); // назва 
+    var $txtDescription = $("#txtDescription"); // опис продукту
+    var $txtPrice = $("#txtPrice"); // ціна 
+    var $productsBlock = $("#productsBlock"); // всі продукти 
+    var $imgPhotoBlock = $("#imgPhotoBlock"); // фото 
     var uploader;
     var cropper = null;
-    var $cropperModal = $("#cropperModal");
+    var $cropperModal = $("#cropperModal"); // модалка кропера
 
-    $("#btnAddProduct").on("click", function () {
+    // оброка кліку для додавання продукту
+    $("#btnAddProduct").on("click", function () { // назва події і функція, яка буде викликатися
         //alert("Ви нажали кнопку");
-        $myModal.modal("show");
+        $myModal.modal("show"); // відкриття модалки
     });
 
+    // заванятаження фото та його зберігання
     $imgPhotoBlock.on("click", function () {
         if (uploader)
             uploader.remove();
@@ -29,8 +31,10 @@
 
     });
 
+    // збереження фото
     $("#btnAddProductSave").on("click", function () {
-
+        // prepend - додавання відбувається зверху
+        // append - додавання відбувається знизу
         $productsBlock.prepend(`
             <div class="row p-2 bg-white border rounded mt-2">
                     <div class="col-md-3 mt-1">
@@ -68,7 +72,7 @@
         closeDialog();
 
     });
-
+    // функція для закриття модалки 
     function closeDialog() {
         $txtName.val("");
         $txtDescription.val("");
@@ -77,7 +81,7 @@
     }
 
     //DragAndDrop
-
+    // дозволяє перетягувати фото з провідника для завантаження на сторінку
     var draganddrop = document.getElementById('draganddrop');
     draganddrop.addEventListener('dragenter', DragIn, false);
     draganddrop.addEventListener('dragover', DragIn, false);
@@ -107,8 +111,9 @@
         e.stopPropagation();
     }
 
+    // Зберігає фото після редагування за допомогою cropper.js
     function SaveImage(e) {
-        initCropper();
+        initCropper(); // виклик кропера після кліку по фотографії
         var files;
         if (e.files) {
             files = e.files;
@@ -124,7 +129,7 @@
                 reader.onload = function () {
                     //$imgPhotoBlock.attr("src", reader.result);
                     $cropperModal.show();
-                    cropper.replace(reader.result);
+                    cropper.replace(reader.result); 
                     //showSuccess(fileImage);
                 }
 
@@ -134,7 +139,7 @@
     }
 
     $("#btnCropImg").on("click", function () {
-        $imgPhotoBlock.attr("src", cropper.getCroppedCanvas().toDataURL());
+        $imgPhotoBlock.attr("src", cropper.getCroppedCanvas().toDataURL()); // зображення, яке було зміненно, видає в base64
         $cropperModal.hide();
     });
 
@@ -142,6 +147,7 @@
         $cropperModal.hide();
     });
 
+    // функція для ініціалізації кропера
     function initCropper() {
         if (cropper == null) {
             const imageCropper = document.getElementById('imageCropper');
